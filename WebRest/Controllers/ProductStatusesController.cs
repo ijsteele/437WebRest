@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,47 +13,47 @@ namespace WebRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GendersController : ControllerBase, iController<Gender>
+    public class ProductStatusesController : ControllerBase, iController<ProductStatus>
     {
         private readonly WebRestOracleContext _context;
 
-        public GendersController(WebRestOracleContext context)
+        public ProductStatusesController(WebRestOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Genders
+        // GET: api/ProductStatuses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Gender>>> Get()
+        public async Task<ActionResult<IEnumerable<ProductStatus>>> Get()
         {
-            return await _context.Genders.ToListAsync();
+            return await _context.ProductStatuses.ToListAsync();
         }
 
-        // GET: api/Genders/5
+        // GET: api/ProductStatuses/5
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Gender>> Get(string id)
+        public async Task<ActionResult<ProductStatus>> Get(string id)
         {
-            var gender = await _context.Genders.FindAsync(id);
+            var product_status = await _context.ProductStatuses.FindAsync(id);
 
-            if (gender == null)
+            if (product_status == null)
             {
                 return NotFound();
             }
 
-            return gender;
+            return product_status;
         }
 
-        // PUT: api/Genders/5
+        // PUT: api/ProductStatuses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, Gender gender)
+        public async Task<IActionResult> Put(string id, ProductStatus product_status)
         {
-            if (id != gender.GenderId)
+            if (id != product_status.ProductStatusId)
             {
                 return BadRequest();
             }
-            _context.Genders.Update(gender);
+            _context.ProductStatuses.Update(product_status);
 
 
 
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GenderExists(id))
+                if (!ProductStatusExists(id))
                 {
                     return NotFound();
                 }
@@ -76,28 +76,28 @@ namespace WebRest.Controllers
             return NoContent();
         }
 
-        // POST: api/Genders
+        // POST: api/ProductStatuses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Gender>> Post(Gender gender)
+        public async Task<ActionResult<ProductStatus>> Post(ProductStatus product_status)
         {
-            _context.Genders.Add(gender);
+            _context.ProductStatuses.Add(product_status);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGender", new { id = gender.GenderId }, gender);
+            return CreatedAtAction("GetProductStatus", new { id = product_status.ProductStatusId }, product_status);
         }
 
-        // DELETE: api/Genders/5
+        // DELETE: api/ProductStatuses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var gender = await _context.Genders.FindAsync(id);
-            if (gender == null)
+            var product_status = await _context.ProductStatuses.FindAsync(id);
+            if (product_status == null)
             {
                 return NotFound();
             }
 
-            _context.Genders.Remove(gender);
+            _context.ProductStatuses.Remove(product_status);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -105,7 +105,7 @@ namespace WebRest.Controllers
 
         private bool Exists(string id)
         {
-            return _context.Genders.Any(e => e.GenderId == id);
+            return _context.ProductStatuses.Any(e => e.ProductStatusId == id);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,47 +13,47 @@ namespace WebRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GendersController : ControllerBase, iController<Gender>
+    public class AddressTypeController : ControllerBase, iController<AddressType>
     {
         private readonly WebRestOracleContext _context;
 
-        public GendersController(WebRestOracleContext context)
+        public AddressTypesController(WebRestOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Genders
+        // GET: api/AddressTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Gender>>> Get()
+        public async Task<ActionResult<IEnumerable<AddressType>>> Get()
         {
-            return await _context.Genders.ToListAsync();
+            return await _context.Address_Types.ToListAsync();
         }
 
-        // GET: api/Genders/5
+        // GET: api/AddressTypes/5
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Gender>> Get(string id)
+        public async Task<ActionResult<AddressType>> Get(string id)
         {
-            var gender = await _context.Genders.FindAsync(id);
+            var address_type = await _context.Address_Types.FindAsync(id);
 
-            if (gender == null)
+            if (address_type == null)
             {
                 return NotFound();
             }
 
-            return gender;
+            return address_type;
         }
 
-        // PUT: api/Genders/5
+        // PUT: api/AddressTypes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, Gender gender)
+        public async Task<IActionResult> Put(string id, AddressType address_type)
         {
-            if (id != gender.GenderId)
+            if (id != address_type.AddressTypeId)
             {
                 return BadRequest();
             }
-            _context.Genders.Update(gender);
+            _context.Address_Types.Update(address_type);
 
 
 
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GenderExists(id))
+                if (!AddressTypesExists(id))
                 {
                     return NotFound();
                 }
@@ -76,28 +76,28 @@ namespace WebRest.Controllers
             return NoContent();
         }
 
-        // POST: api/Genders
+        // POST: api/AddressTypes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Gender>> Post(Gender gender)
+        public async Task<ActionResult<AddressType>> Post(AddressType address_type)
         {
-            _context.Genders.Add(gender);
+            _context.AddressTypes.Add(address_type);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGender", new { id = gender.GenderId }, gender);
+            return CreatedAtAction("GetAddress_Type", new { id = address_type.AddressTypeId }, address_type);
         }
 
-        // DELETE: api/Genders/5
+        // DELETE: api/AddressType/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var gender = await _context.Genders.FindAsync(id);
-            if (gender == null)
+            var address_type = await _context.AddressTypes.FindAsync(id);
+            if (address_type == null)
             {
                 return NotFound();
             }
 
-            _context.Genders.Remove(gender);
+            _context.AddressTypes.Remove(address_type);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -105,7 +105,7 @@ namespace WebRest.Controllers
 
         private bool Exists(string id)
         {
-            return _context.Genders.Any(e => e.GenderId == id);
+            return _context.AddressTypes.Any(e => e.AddressTypeId == id);
         }
     }
 }
