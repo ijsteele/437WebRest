@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }

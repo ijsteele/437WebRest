@@ -32,7 +32,7 @@ namespace WebRest.Controllers
         // GET: api/Genders/5
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<OrderStatuses>> Get(string id)
+        public async Task<ActionResult<OrderStatus>> Get(string id)
         {
             var order_status = await _context.OrderStatuses.FindAsync(id);
 
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderStatusExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }
@@ -84,7 +84,7 @@ namespace WebRest.Controllers
             _context.OrderStatuses.Add(order_status);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrderStatus", new { id = order_status.OrderStatusesId }, order_status);
+            return CreatedAtAction("GetOrderStatus", new { id = order_status.OrderStatusId }, order_status);
         }
 
         // DELETE: api/OrderStatus/5

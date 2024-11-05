@@ -13,7 +13,7 @@ namespace WebRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressTypeController : ControllerBase, iController<AddressType>
+    public class AddressTypesController : ControllerBase, iController<AddressType>
     {
         private readonly WebRestOracleContext _context;
 
@@ -26,7 +26,7 @@ namespace WebRest.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AddressType>>> Get()
         {
-            return await _context.Address_Types.ToListAsync();
+            return await _context.AddressTypes.ToListAsync();
         }
 
         // GET: api/AddressTypes/5
@@ -34,7 +34,7 @@ namespace WebRest.Controllers
         [Route("{id}")]
         public async Task<ActionResult<AddressType>> Get(string id)
         {
-            var address_type = await _context.Address_Types.FindAsync(id);
+            var address_type = await _context.AddressTypes.FindAsync(id);
 
             if (address_type == null)
             {
@@ -53,7 +53,7 @@ namespace WebRest.Controllers
             {
                 return BadRequest();
             }
-            _context.Address_Types.Update(address_type);
+            _context.AddressTypes.Update(address_type);
 
 
 
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AddressTypesExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }
@@ -84,7 +84,7 @@ namespace WebRest.Controllers
             _context.AddressTypes.Add(address_type);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAddress_Type", new { id = address_type.AddressTypeId }, address_type);
+            return CreatedAtAction("GetAddressType", new { id = address_type.AddressTypeId }, address_type);
         }
 
         // DELETE: api/AddressType/5

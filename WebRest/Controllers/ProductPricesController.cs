@@ -13,28 +13,28 @@ namespace WebRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PricesController : ControllerBase, iController<Price>
+    public class ProductPricesController : ControllerBase, iController<ProductPrice>
     {
         private readonly WebRestOracleContext _context;
 
-        public PricesController(WebRestOracleContext context)
+        public ProductPricesController(WebRestOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/Prices
+        // GET: api/ProductPrices
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Price>>> Get()
+        public async Task<ActionResult<IEnumerable<ProductPrice>>> Get()
         {
-            return await _context.Prices.ToListAsync();
+            return await _context.ProductPrices.ToListAsync();
         }
 
-        // GET: api/Prices/5
+        // GET: api/ProductPrices/5
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Price>> Get(string id)
+        public async Task<ActionResult<ProductPrice>> Get(string id)
         {
-            var price = await _context.Prices.FindAsync(id);
+            var price = await _context.ProductPrices.FindAsync(id);
 
             if (price == null)
             {
@@ -44,16 +44,16 @@ namespace WebRest.Controllers
             return price;
         }
 
-        // PUT: api/Prices/5
+        // PUT: api/ProductPrices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, Price price)
+        public async Task<IActionResult> Put(string id, ProductPrice price)
         {
-            if (id != price.PriceId)
+            if (id != price.ProductPriceId)
             {
                 return BadRequest();
             }
-            _context.Prices.Update(price);
+            _context.ProductPrices.Update(price);
 
 
 
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PriceExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }
@@ -76,28 +76,28 @@ namespace WebRest.Controllers
             return NoContent();
         }
 
-        // POST: api/Prices
+        // POST: api/ProductPrices
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Price>> Post(Price price)
+        public async Task<ActionResult<ProductPrice>> Post(ProductPrice price)
         {
-            _context.Prices.Add(price);
+            _context.ProductPrices.Add(price);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPrice", new { id = price.PriceId }, price);
+            return CreatedAtAction("GetProductPrice", new { id = price.ProductPriceId }, price);
         }
 
-        // DELETE: api/Prices/5
+        // DELETE: api/ProductPrices/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var price = await _context.Prices.FindAsync(id);
+            var price = await _context.ProductPrices.FindAsync(id);
             if (price == null)
             {
                 return NotFound();
             }
 
-            _context.Prices.Remove(price);
+            _context.ProductPrices.Remove(price);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -105,7 +105,7 @@ namespace WebRest.Controllers
 
         private bool Exists(string id)
         {
-            return _context.Prices.Any(e => e.PriceId == id);
+            return _context.ProductPrices.Any(e => e.ProductPriceId == id);
         }
     }
 }

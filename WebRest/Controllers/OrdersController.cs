@@ -49,7 +49,7 @@ namespace WebRest.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, Order order)
         {
-            if (id != order.OrderId)
+            if (id != order.OrdersId)
             {
                 return BadRequest();
             }
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }
@@ -84,7 +84,7 @@ namespace WebRest.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGender", new { id = order.OrderId }, order);
+            return CreatedAtAction("GetGender", new { id = order.OrdersId }, order);
         }
 
         // DELETE: api/Orders/5

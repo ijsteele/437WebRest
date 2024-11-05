@@ -13,28 +13,28 @@ namespace WebRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderLinesController : ControllerBase, iController<OrderLine>
+    public class OrdersLinesController : ControllerBase, iController<OrdersLine>
     {
         private readonly WebRestOracleContext _context;
 
-        public OrderLinesController(WebRestOracleContext context)
+        public OrdersLinesController(WebRestOracleContext context)
         {
             _context = context;
         }
 
-        // GET: api/OrderLines
+        // GET: api/OrdersLine
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrerLines>>> Get()
+        public async Task<ActionResult<IEnumerable<OrdersLine>>> Get()
         {
-            return await _context.OrderLines.ToListAsync();
+            return await _context.OrdersLines.ToListAsync();
         }
 
-        // GET: api/OrderLines/5
+        // GET: api/OrdersLine/5
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<OrderLine>> Get(string id)
+        public async Task<ActionResult<OrdersLine>> Get(string id)
         {
-            var order_line = await _context.OrderLines.FindAsync(id);
+            var order_line = await _context.OrdersLines.FindAsync(id);
 
             if (order_line == null)
             {
@@ -44,16 +44,16 @@ namespace WebRest.Controllers
             return order_line;
         }
 
-        // PUT: api/OrderLines/5
+        // PUT: api/OrdersLine/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, OrderLine order_line)
+        public async Task<IActionResult> Put(string id, OrdersLine order_line)
         {
-            if (id != order_line.OrderLineId)
+            if (id != order_line.OrdersLineId)
             {
                 return BadRequest();
             }
-            _context.OrderLines.Update(order_line);
+            _context.OrdersLines.Update(order_line);
 
 
 
@@ -63,7 +63,7 @@ namespace WebRest.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderLineExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }
@@ -76,28 +76,28 @@ namespace WebRest.Controllers
             return NoContent();
         }
 
-        // POST: api/OrderLines
+        // POST: api/OrdersLines
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderLine>> Post(OrderLines order_line)
+        public async Task<ActionResult<OrdersLine>> Post(OrdersLine order_line)
         {
-            _context.OrderLines.Add(order_line);
+            _context.OrdersLines.Add(order_line);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrderLine", new { id = order_line.OrderLineId }, order_line);
+            return CreatedAtAction("GetOrdersLine", new { id = order_line.OrdersLineId }, order_line);
         }
 
-        // DELETE: api/OrderLines/5
+        // DELETE: api/OrdersLines/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var order_line = await _context.OrderLines.FindAsync(id);
+            var order_line = await _context.OrdersLines.FindAsync(id);
             if (order_line == null)
             {
                 return NotFound();
             }
 
-            _context.OrderLines.Remove(order_line);
+            _context.OrdersLines.Remove(order_line);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -105,7 +105,7 @@ namespace WebRest.Controllers
 
         private bool Exists(string id)
         {
-            return _context.OrderLines.Any(e => e.OrderLineId == id);
+            return _context.OrdersLines.Any(e => e.OrdersLineId == id);
         }
     }
 }
